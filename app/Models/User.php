@@ -46,4 +46,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function dustbins()
+    {
+        return $this->hasMany(Dustbin::class, 'user_id');
+    }
 }
