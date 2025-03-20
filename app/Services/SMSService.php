@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class SMSService
@@ -10,7 +11,12 @@ class SMSService
     {
         if(env('SMS_URL')){
             $url = env('SMS_URL') . $phoneno . "&messageContent=" . urlencode($messageBody);
-            return Self::smsApi($url);
+            Log::info($url);
+            try {
+                return Self::smsApi($url);
+            } catch (\Exception $e) {
+                Log::error('Error sending SMS: ' . $e->getMessage());
+            }
         }
     }
 
@@ -25,3 +31,4 @@ class SMSService
         return json_decode($response, true);
     }
 }
+

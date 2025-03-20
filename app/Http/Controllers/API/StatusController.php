@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Dustbin;
 use App\Services\SMSService;
 use Illuminate\Http\Request;
+use Log;
 
 class StatusController extends Controller
 {
@@ -30,6 +31,7 @@ class StatusController extends Controller
         $dustbin->save();
 
         if (($dustbin->fill_level >= $dustbin->notification_threshold) && $dustbin->sms_notification == 1 && $dustbin->user?->phone) {
+            Log::info('Sending SMS notification for dustbin ' . $dustbin->id);
             SMSService::sendSms($dustbin->user?->phone, "Trash level of " . $dustbin->name . " is " . $dustbin->fill_level . "%. Please empty the dustbin.");
         }
 
