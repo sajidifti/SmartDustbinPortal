@@ -13,7 +13,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
 
-    Route::get('dustbins', [DustbinController::class, 'index'])->name('dustbins');
+    Route::get('dustbins', [DustbinController::class, 'index'])->name('dustbins.index');
+
+    Route::put('dustbins/{id}', [DustbinController::class, 'update'])->name('dustbins.update');
+
+    Route::post('dustbins', [DustbinController::class, 'store'])->name('dustbins.store');
+
+    Route::delete('dustbins/{id}', [DustbinController::class, 'delete'])->name('dustbins.delete');
 });
 
 require __DIR__.'/settings.php';

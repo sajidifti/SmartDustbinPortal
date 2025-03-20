@@ -24,9 +24,12 @@ class StatusController extends Controller
         }
 
         $dustbin->fill_level = $trash_level;
+        $dustbin->last_online = now();
+        $dustbin->online_status = 1;
+        $dustbin->last_ip = $request->ip();
         $dustbin->save();
 
-        Log::info('Dustbin ' . $dustbin->id . ' updated:' . 'Trash level: ' . $dustbin->fill_level . '%');
+        // Log::info('Dustbin ' . $dustbin->id . ' updated:' . 'Trash level: ' . $dustbin->fill_level . '%');
 
         return response()->json(['status' => 'ok'], 200);
     }

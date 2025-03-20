@@ -32,6 +32,7 @@ interface SmartDustbinProps {
   smsNotification: boolean
   notificationThreshold: number
   onUpdate?: (id: number, data: Partial<SmartDustbinProps>) => void
+  onDelete?: (id: number, data: Partial<SmartDustbinProps>) => void
 }
 
 export default function SmartDustbinCard({
@@ -47,6 +48,7 @@ export default function SmartDustbinCard({
   smsNotification = false,
   notificationThreshold = 90,
   onUpdate = () => {},
+  onDelete = () => {},
 }: SmartDustbinProps) {
   const [open, setOpen] = useState(false)
   const [formData, setFormData] = useState({
@@ -54,7 +56,6 @@ export default function SmartDustbinCard({
     isActive,
     token,
     tokenExpire,
-    fillLevel,
     smsNotification,
     notificationThreshold,
   })
@@ -65,6 +66,11 @@ export default function SmartDustbinCard({
 
   const handleSubmit = () => {
     onUpdate(id, formData)
+    setOpen(false)
+  }
+
+  const handleDelete = () => {
+    onDelete(id, { isActive: false })
     setOpen(false)
   }
 
@@ -207,7 +213,6 @@ export default function SmartDustbinCard({
                     <span>Offline</span>
                   </Badge>
                 )}
-                <span className="text-xs text-muted-foreground">(System determined)</span>
               </div>
             </div>
 
@@ -236,17 +241,10 @@ export default function SmartDustbinCard({
                 Fill Level
               </Label>
               <div className="col-span-3 flex items-center gap-2">
-                <Input
-                  id="fillLevel"
-                  type="number"
-                  min="0"
-                  max="100"
-                  value={formData.fillLevel}
-                  onChange={(e) => handleChange("fillLevel", Number.parseInt(e.target.value))}
-                  className="w-20"
-                />
-                <span>%</span>
-                {/* <span className="text-xs text-muted-foreground">(Usually system determined)</span> */}
+                <Badge variant="outline" className="flex items-center gap-1">
+                  <Globe className="h-3.5 w-3.5" />
+                  <span>{fillLevel || "0 %"}</span>
+                </Badge>
               </div>
             </div>
 
@@ -282,7 +280,14 @@ export default function SmartDustbinCard({
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit" onClick={handleSubmit}>
+            <Button
+              type="button"
+              className="cursor-pointer mr-2 bg-red-500 text-white hover:bg-red-700"
+              onClick={handleDelete}
+            >
+              Delete
+            </Button>
+            <Button type="submit" className="cursor-pointer" onClick={handleSubmit}>
               Save changes
             </Button>
           </DialogFooter>
