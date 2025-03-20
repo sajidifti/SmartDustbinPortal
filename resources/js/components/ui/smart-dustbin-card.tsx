@@ -242,8 +242,7 @@ export default function SmartDustbinCard({
               </Label>
               <div className="col-span-3 flex items-center gap-2">
                 <Badge variant="outline" className="flex items-center gap-1">
-                  <Globe className="h-3.5 w-3.5" />
-                  <span>{fillLevel || "0 %"}</span>
+                  <span>{fillLevel + " %" || "0 %"}</span>
                 </Badge>
               </div>
             </div>
