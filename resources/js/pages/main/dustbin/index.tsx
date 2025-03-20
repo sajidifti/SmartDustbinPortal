@@ -31,7 +31,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Dustbins({ dustbins }: { dustbins: Dustbin[] }) {
-    const [bins, setBins] = useState(dustbins);
+    const [bins] = useState(dustbins);
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [newDustbin, setNewDustbin] = useState({
         name: '',
