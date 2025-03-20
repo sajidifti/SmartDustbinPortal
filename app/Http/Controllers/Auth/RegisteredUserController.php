@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Auth\Events\Registered;
 
 class RegisteredUserController extends Controller
 {
@@ -33,6 +34,18 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
+            'phone' => [
+                'required',
+                'string',
+                'max:11',
+                'min:11',
+                function ($attribute, $value, $fail) {
+                    if (! in_array(substr($value, 0, 3), ['013', '014', '015', '016', '017', '018', '019'])) {
+                        $fail('The phone must start with 013, 014, 015, 016, 017, 018, or 019.');
+                    }
+                },
+                Rule::unique(User::class, 'phone'),
+            ],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
