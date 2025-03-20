@@ -31,6 +31,7 @@ class StatusController extends Controller
         $dustbin->save();
 
         if (($dustbin->fill_level >= $dustbin->notification_threshold) && $dustbin->sms_notification == 1 && $dustbin->user?->phone) {
+            Log::info('Sending SMS to ' . $dustbin->user->phone);
             SMSService::sendSms($dustbin->user?->phone, "Trash level of " . $dustbin->name . " is " . $dustbin->fill_level . " Percent. Please empty the dustbin.");
         }
 
