@@ -75,25 +75,29 @@ export default function Welcome() {
                             </ul>
                             <ul className="flex gap-3 text-sm leading-normal">
                                 <li>
-                                    <Link
-                                        href={route('login')}
-                                        className="inline-block rounded-sm border border-black bg-[#1b1b18] px-5 py-1.5 text-sm leading-normal text-white hover:border-black hover:bg-black dark:border-[#eeeeec] dark:bg-[#eeeeec] dark:text-[#1C1C1A] dark:hover:border-white dark:hover:bg-white"
-                                    >
-                                        Login
-                                    </Link>
+                                    {auth.user ? (
+                                        <Link
+                                            href={route('dashboard')}
+                                            className="inline-block rounded-sm border border-black bg-[#1b1b18] px-5 py-1.5 text-sm leading-normal text-white hover:border-black hover:bg-black dark:border-[#eeeeec] dark:bg-[#eeeeec] dark:text-[#1C1C1A] dark:hover:border-white dark:hover:bg-white"
+                                        >
+                                            Dashboard
+                                        </Link>
+                                    ) : (
+                                        <Link
+                                            href={route('login')}
+                                            className="inline-block rounded-sm border border-black bg-[#1b1b18] px-5 py-1.5 text-sm leading-normal text-white hover:border-black hover:bg-black dark:border-[#eeeeec] dark:bg-[#eeeeec] dark:text-[#1C1C1A] dark:hover:border-white dark:hover:bg-white"
+                                        >
+                                            Login
+                                        </Link>
+                                    )}
                                 </li>
                             </ul>
                         </div>
                         <div className="relative -mb-px aspect-[335/376] w-full shrink-0 overflow-hidden rounded-t-lg bg-[#fff2f2] lg:mb-0 lg:-ml-px lg:aspect-auto lg:w-[438px] lg:rounded-t-none lg:rounded-r-lg dark:bg-[#1D0002]">
-                            
                             <div className="absolute inset-0 flex items-center justify-center">
                                 <div className="flex flex-col items-center justify-center text-center">
-                                    <h1 className="text-6xl font-extrabold tracking-tight text-black dark:text-white">
-                                        IoTHub
-                                    </h1>
-                                    <p className="mt-2 text-lg text-gray-600 dark:text-gray-300">
-                                        The future of waste management
-                                    </p>
+                                    <h1 className="text-6xl font-extrabold tracking-tight text-black dark:text-white">IoTHub</h1>
+                                    <p className="mt-2 text-lg text-gray-600 dark:text-gray-300">The future of waste management</p>
                                 </div>
                             </div>
 
